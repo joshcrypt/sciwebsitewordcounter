@@ -1,0 +1,21 @@
+﻿@using sciwebsitewordcounter.Models
+@model IEnumerable<sciwebsitewordcounter.Models.WordCount>
+@{
+    Layout = null;
+}
+@{
+    ViewBag.Title = "About";
+}
+<table>
+    <tr>
+        <th>Key</th>
+        <th>Count</th>
+    </tr>
+    @foreach (var d in (IEnumerable<WordCount>)TempData["wordcountdata"])
+    {
+        <tr>
+            <td>@d.SiteKey</td>
+            <td>@d.SiteCount</td>
+        </tr>
+    }
+</table>

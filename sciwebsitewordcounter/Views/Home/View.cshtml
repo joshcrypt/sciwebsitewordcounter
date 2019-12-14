@@ -1,0 +1,20 @@
+﻿@model IEnumerable<sciwebsitewordcounter.Models.WordCount>
+@{
+    Layout = null;
+}
+@{ 
+    ViewBag.Title = "About";
+}
+<table>
+    <tr>
+        <th>Key</th>
+        <th>Count</th>
+    </tr>
+    @foreach (var d in Model)
+    {
+        <tr>
+            <td>@d.siteKey</td>
+            <td>@d.siteCount</td>
+        </tr>
+    }
+</table>
