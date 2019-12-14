@@ -23,7 +23,8 @@ namespace sciwebsitewordcounter
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.Add(new ServiceDescriptor(typeof(WordCountStore), new WordCountStore(Configuration.GetConnectionString("DefaultConnection"))));
+            services.AddTransient<WordCountStore>(_ => new WordCountStore(Configuration.GetConnectionString("DefaultConnection")));
+            //services.Add(new ServiceDescriptor(typeof(WordCountStore), new WordCountStore(Configuration.GetConnectionString("DefaultConnection"))));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

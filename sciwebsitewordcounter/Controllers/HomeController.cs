@@ -7,11 +7,17 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using sciwebsitewordcounter.Models;
 using System.Text.RegularExpressions;
+using MySql.Data.MySqlClient;
 
 namespace sciwebsitewordcounter.Controllers
 {
     public class HomeController : Controller
     {
+        private WordCountStore WordCountStore { get; set; }
+        public HomeController(WordCountStore wordCountStore)
+        {
+            this.WordCountStore = wordCountStore;
+        }
         public List<WordCount> wordcount;
         public List<string[]> sitewordcount;
         [HttpGet]
@@ -48,8 +54,9 @@ namespace sciwebsitewordcounter.Controllers
                     });
                 }
                 Debug.WriteLine(wordcount.Count);
-                TempData["wordcountdata"] = wordcount;
+                TempData["wordcountdata"] = wordcount;                
             }
+
             return View("WordCount");
         }
         public IActionResult Error()
