@@ -8,11 +8,11 @@
         <th>Key</th>
         <th>Count</th>
     </tr>
-    @foreach (var d in (IEnumerable<WordCount>)TempData["wordcountdata"])
+    @foreach (var wcd in (IEnumerable<WordCount>)TempData["wordcountdata"])
     {
         <tr>
-            <td style ="font-size:@d.SiteCount">@d.SiteKey</td>
-            <td style ="font-size:@d.SiteCount">@d.SiteCount</td>
+            <td style ="font-size:"@(wcd.SiteCount)+"px">@wcd.SiteKey</td>
+            <td style ="font-size:"@(wcd.SiteCount)+"px">@wcd.SiteCount</td>
         </tr>
     }
 </table>
