@@ -32,6 +32,9 @@ namespace sciwebsitewordcounter.Controllers
                 //return only letters
                 var getAlphabetonly = new Regex(@"^[A-z]+$");
                 content = content.Where(f => getAlphabetonly.IsMatch(f)).ToList();
+                //removes prepositions and words less than 2 characters
+                string[] blockedprepositions = { "and", "for", "is", "on", "or", "to", "the", "a" };
+                content = content.Where(x => x.Length > 2).Where(x => !blockedprepositions.Contains(x)).ToList();
                 var sitewords = content.GroupBy(x => x).OrderByDescending(x => x.Count());
                 var wordcount = new List<WordCount>();
                 foreach (var siteword in sitewords)
