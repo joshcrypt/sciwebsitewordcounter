@@ -14,6 +14,7 @@ namespace sciwebsitewordcounter.Controllers
     public class HomeController : Controller
     {
         private WordCountStore WordCountStore { get; set; }
+        //Initialize Mysql Connection
         public HomeController(WordCountStore wordCountStore)
         {
             this.WordCountStore = wordCountStore;
@@ -43,15 +44,19 @@ namespace sciwebsitewordcounter.Controllers
                 content = content.Where(x => x.Length > 2).Where(x => !blockedprepositions.Contains(x)).ToList();
                 var sitewords = content.GroupBy(x => x).OrderByDescending(x => x.Count());
                 var wordcount = new List<WordCount>();
+                var query = this.WordCountStore.Connection.CreateCommand() as MySqlCommand;
+                int wordcounter = 1;
                 foreach (var siteword in sitewords)
                 {
-                    Debug.WriteLine("{0} {1}", siteword.Key, siteword.Count());
+                    //Debug.WriteLine("{0} {1}", siteword.Key, siteword.Count());
+                    query.CommandText = @"Insert into `wordcounter`(`wordprkey`,`word`,`frequency`) values (wordcounter.to,'today',5);";
                     wordcount.Add(new WordCount
                     {
                         //Create Dictionary
                         SiteKey = siteword.Key,
                         SiteCount = siteword.Count().ToString()
                     });
+                    wordcounter++;
                 }
                 Debug.WriteLine(wordcount.Count);
                 TempData["wordcountdata"] = wordcount;                
