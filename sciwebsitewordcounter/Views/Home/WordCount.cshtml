@@ -1,12 +1,9 @@
 ﻿@using sciwebsitewordcounter.Models
 @model IEnumerable<sciwebsitewordcounter.Models.WordCount>
 @{
-    Layout = null;
+    ViewBag.Title = "Word Count";
 }
-@{
-    ViewBag.Title = "About";
-}
-<table>
+<table class="table table-dark">
     <tr>
         <th>Key</th>
         <th>Count</th>
@@ -14,8 +11,8 @@
     @foreach (var d in (IEnumerable<WordCount>)TempData["wordcountdata"])
     {
         <tr>
-            <td>@d.SiteKey</td>
-            <td>@d.SiteCount</td>
+            <td style ="font-weight:@d.SiteCount">@d.SiteKey</td>
+            <td style ="font-weight:@d.SiteCount">@d.SiteCount</td>
         </tr>
     }
 </table>
