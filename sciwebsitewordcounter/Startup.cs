@@ -23,7 +23,6 @@ namespace sciwebsitewordcounter
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddTransient<WordCountStore>(_ => new WordCountStore(Configuration.GetConnectionString("DefaultConnection")));
             //services.Add(new ServiceDescriptor(typeof(WordCountStore), new WordCountStore(Configuration.GetConnectionString("DefaultConnection"))));
         }
 

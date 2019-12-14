@@ -6,17 +6,16 @@ using MySql.Data.MySqlClient;
 
 namespace sciwebsitewordcounter.Models
 {
-    public class WordCountStore : IDisposable
+    public class WordCountStore
     {
-        public MySqlConnection Connection;
+        public string ConnectionString { get; set; }
         public WordCountStore(string connectionString)
         {
-            Connection = new MySqlConnection(connectionString);
-            this.Connection.Open();
+            this.ConnectionString = connectionString;
         }
-        public void Dispose()
+        private MySqlConnection GetConnection()
         {
-            Connection.Close();
+            return new MySqlConnection(ConnectionString);
         }
     }
 }

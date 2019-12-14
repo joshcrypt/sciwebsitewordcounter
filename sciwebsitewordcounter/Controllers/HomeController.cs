@@ -7,18 +7,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using sciwebsitewordcounter.Models;
 using System.Text.RegularExpressions;
-using MySql.Data.MySqlClient;
 
 namespace sciwebsitewordcounter.Controllers
 {
     public class HomeController : Controller
     {
-        private WordCountStore WordCountStore { get; set; }
-        //Initialize Mysql Connection
-        public HomeController(WordCountStore wordCountStore)
-        {
-            this.WordCountStore = wordCountStore;
-        }
         public List<WordCount> wordcount;
         public List<string[]> sitewordcount;
         [HttpGet]
@@ -39,29 +32,21 @@ namespace sciwebsitewordcounter.Controllers
                 //return only letters
                 var getAlphabetonly = new Regex(@"^[A-z]+$");
                 content = content.Where(f => getAlphabetonly.IsMatch(f)).ToList();
-                //removes prepositions and words less than 2 characters
-                string[] blockedprepositions = { "and", "for", "is", "on", "or", "to", "the","a" };
-                content = content.Where(x => x.Length > 2).Where(x => !blockedprepositions.Contains(x)).ToList();
                 var sitewords = content.GroupBy(x => x).OrderByDescending(x => x.Count());
                 var wordcount = new List<WordCount>();
-                var query = this.WordCountStore.Connection.CreateCommand() as MySqlCommand;
-                int wordcounter = 1;
                 foreach (var siteword in sitewords)
                 {
-                    //Debug.WriteLine("{0} {1}", siteword.Key, siteword.Count());
-                    query.CommandText = @"Insert into `wordcounter`(`wordprkey`,`word`,`frequency`) values (wordcounter.to,'today',5);";
+                    Debug.WriteLine("{0} {1}", siteword.Key, siteword.Count());
                     wordcount.Add(new WordCount
                     {
                         //Create Dictionary
                         SiteKey = siteword.Key,
                         SiteCount = siteword.Count().ToString()
                     });
-                    wordcounter++;
                 }
                 Debug.WriteLine(wordcount.Count);
-                TempData["wordcountdata"] = wordcount;                
+                TempData["wordcountdata"] = wordcount;
             }
-
             return View("WordCount");
         }
         public IActionResult Error()
