@@ -11,8 +11,8 @@
     @foreach (var d in (IEnumerable<WordCount>)TempData["wordcountdata"])
     {
         <tr>
-            <td style ="font-weight:@d.SiteCount">@d.SiteKey</td>
-            <td style ="font-weight:@d.SiteCount">@d.SiteCount</td>
+            <td style ="font-size:@d.SiteCount">@d.SiteKey</td>
+            <td style ="font-size:@d.SiteCount">@d.SiteCount</td>
         </tr>
     }
 </table>
